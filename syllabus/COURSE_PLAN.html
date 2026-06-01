@@ -13,6 +13,7 @@
     --bg:       #0A0A0F;
     --surface:  #111122;
     --card:     #15152A;
+    --card-hover:#17172E;
     --border:   #262640;
     --border-br:#353556;
     --text:     #E2E8F0;
@@ -145,13 +146,12 @@
 
   .how-title {
     font-family: var(--disp);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--cyan);
     margin-bottom: 12px;
     letter-spacing: .04em;
     text-transform: uppercase;
-    font-size: 12px;
   }
 
   .how-list {
@@ -287,7 +287,11 @@
   }
 
   .day-card:hover {
-    background: #17172e;
+    background: var(--card-hover);
+  }
+  .day-card:focus-visible {
+    outline: 2px solid var(--cyan);
+    outline-offset: 2px;
   }
 
   .day-card.done {
@@ -440,6 +444,8 @@
   <p class="site-sub">A 2-month introduction for diploma CS students</p>
 </header>
 
+<main>
+
 <!-- ═══════ STATS ROW ═══════ -->
 <div class="stats-row">
   <div class="stat-box">
@@ -509,6 +515,8 @@
 
 <!-- ═══════ MODULE BODY ═══════ -->
 <div class="module-body" id="module-body"></div>
+
+</main>
 
 <!-- ═══════ FOOTER ═══════ -->
 <footer class="site-footer">
@@ -646,7 +654,7 @@ function renderModule() {
     const doneBadge = isDone ? `<span class="done-badge">&#10003; done</span>` : '';
 
     html += `
-      <div class="day-card${isDone ? ' done' : ''}" style="border-color:${isOpen ? hex(mod.color, 0.35) : 'var(--border)'}" data-day="${day.day}">
+      <div class="day-card${isDone ? ' done' : ''}" role="button" tabindex="0" aria-expanded="${isOpen}" aria-label="Day ${day.day}: ${day.title}" style="border-color:${isOpen ? hex(mod.color, 0.35) : 'var(--border)'}" data-day="${day.day}">
         <div class="day-header">
           <div class="day-badge" style="background:${hex(mod.color, 0.13)};color:${mod.color}">Day ${day.day}</div>
           <div class="day-title-text">${day.title}</div>
@@ -661,12 +669,19 @@ function renderModule() {
   html += `</div>`;
   body.innerHTML = html;
 
-  // Attach click listeners
+  // Toggle day expansion — mouse and keyboard
+  const toggle = (card) => {
+    const d = parseInt(card.dataset.day);
+    expandedDay = expandedDay === d ? null : d;
+    renderModule();
+  };
   body.querySelectorAll('.day-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const d = parseInt(card.dataset.day);
-      expandedDay = expandedDay === d ? null : d;
-      renderModule();
+    card.addEventListener('click', () => toggle(card));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle(card);
+      }
     });
   });
 }
