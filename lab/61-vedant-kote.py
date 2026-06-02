@@ -37,3 +37,9 @@ print("b",div_3(b))
 print("c",div_3(c))
 
 #problem 4
+def print_elements(lst):
+    for item in lst:
+        print(item)
+
+d = [1, 2, 3]
+print_elements(d)
