@@ -13,4 +13,4 @@ for x in s:
     count=count+1
   else:
     "continued"
- print(count)
+print(count)
