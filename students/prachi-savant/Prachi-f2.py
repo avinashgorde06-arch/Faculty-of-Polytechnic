@@ -61,4 +61,15 @@ print("Count of vowels =", len(V))
 
 print("Consonants =", C)
 print("Count of consonants =", len(C))
+#problem5
+num = 10
+
+guess = int(input("Guess a number between 1 and 100: "))
+
+if guess == num:
+    print("Correct Guess")
+elif guess < num:
+    print("Too Low")
+else:
+    print("Too High")
 
