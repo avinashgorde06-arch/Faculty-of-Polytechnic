@@ -8,7 +8,7 @@ elif unum > num:
     print("High")
 else:
     print("Correct")
-#problem
+#problem2
 num=10
 unum=0
 while unum!=num:
@@ -17,4 +17,13 @@ while unum!=num:
         print("correct guess")
     else:
         print("incorrect guess")
+        #problem 3
+nos = 5
+Students = []
+
+for i in range(nos):
+    name = input("Enter name: ")
+    Students.append(name)
+
+print(Students)
         
